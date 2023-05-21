@@ -29,9 +29,9 @@ export const generateRefreshToken = (uid, res = response) => {
     // Guardar el token en la cookie del navegador
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: process.env.MODO === "developer" ? false : true,
+      secure: true, //process.env.MODO === "developer" ? false : true,
       expires,
-      sameSite: "none",
+      sameSite: "none"
     }); 
     return { refreshToken };
   } catch (error) {

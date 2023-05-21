@@ -3,7 +3,7 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { USER_REGEX, PWD_REGEX, REGISTER_URL, EMAIL_REGEX } from '../../constantes';
 import axios from '../../api/axios';
-import { IRegisterResponse } from './interfaces';
+import { IRegisterResponse } from './interfaces'; 
 
 export const Register = () => {
   const userRef = useRef<any>();
@@ -78,13 +78,17 @@ export const Register = () => {
       console.log(JSON.stringify(response));
       setSuccess(true);
       // clear input fields if you want to
-    } catch (err: any) {
+    } catch (err: any) { 
       if (!err?.response) {
         setErrMsg('No Server Response');
       } else if (err.response?.status === 409) {
         setErrMsg('Username Taken');
       } else {
-        setErrMsg('Registration Failed');
+        if (err.response?.data.errors) {
+          setErrMsg(err.response?.data.errors[0].msg);
+        } else {
+          setErrMsg('Registration Failed');
+        }
       }
       errRef.current.focus();
     }
