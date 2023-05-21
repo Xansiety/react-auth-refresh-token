@@ -58,6 +58,7 @@ export const Login = () => {
           setErrorMsg('Invalid login');
         }
       }
+      errRef?.current?.focus();
     }
   };
 

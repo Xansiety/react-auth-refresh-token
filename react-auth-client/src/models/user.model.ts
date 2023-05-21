@@ -15,5 +15,6 @@ export interface User {
   uid: string;
   name: string;
   token: string;
+  role: Array<string>;
   expiresIn: number;
 }

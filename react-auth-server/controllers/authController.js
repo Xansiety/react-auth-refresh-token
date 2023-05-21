@@ -27,6 +27,7 @@ export const registerAction = async (req = request, res = response) => {
       usuario: {
         uid,
         name: usuario.nombre,
+        role: usuario.rol,
       },
       token,
       expiresIn,
@@ -92,6 +93,7 @@ export const loginAction = async (req = request, res = response) => {
       usuario: {
         uid,
         name: usuario.nombre,
+        role: usuario.rol,
       },
       token,
       expiresIn, 
