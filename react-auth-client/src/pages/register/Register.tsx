@@ -3,26 +3,26 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { USER_REGEX, PWD_REGEX, REGISTER_URL, EMAIL_REGEX } from '../../constantes';
 import axios from '../../api/axios';
-import { BackendRegisterUserResponse, User } from '../../models';
-import { UserRegisterAdapter } from '../../adapters/user.adapter';
+import { BackendRegisterUserResponse, User } from '../../models'; 
+import { UserRegisterAdapter } from '../../adapters';
 
 export const Register = () => {
   const userRef = useRef<any>();
   const errRef = useRef<any>();
 
-  const [user, setUser] = useState('xansiety');
+  const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [email, setEmail] = useState('test@test.com');
+  const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  const [pwd, setPwd] = useState('Abcd123!');
+  const [pwd, setPwd] = useState('');
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState('Abcd123!');
+  const [matchPwd, setMatchPwd] = useState('');
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
@@ -78,7 +78,7 @@ export const Register = () => {
         }
       );
       setSuccess(true);
-      console.log(response.data);
+      // console.log(response.data);
       setUserApp(UserRegisterAdapter(response.data));
       // clear input fields if you want to
     } catch (err: any) {
