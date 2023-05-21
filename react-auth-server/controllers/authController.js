@@ -24,6 +24,10 @@ export const registerAction = async (req = request, res = response) => {
     return res.status(201).json({
       ok: true,
       msg: "Usuario creado correctamente.",
+      usuario: {
+        uid,
+        name: usuario.nombre,
+      },
       token,
       expiresIn,
     });
@@ -84,8 +88,13 @@ export const loginAction = async (req = request, res = response) => {
 
     res.status(200).json({
       ok: true,
+      msg: "Login correcto",
+      usuario: {
+        uid,
+        name: usuario.nombre,
+      },
       token,
-      expiresIn,
+      expiresIn, 
     });
   } catch (error) {
     console.log(error);

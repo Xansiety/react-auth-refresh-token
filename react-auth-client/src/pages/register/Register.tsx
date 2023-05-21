@@ -3,30 +3,32 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { USER_REGEX, PWD_REGEX, REGISTER_URL, EMAIL_REGEX } from '../../constantes';
 import axios from '../../api/axios';
-import { IRegisterResponse } from './interfaces'; 
+import { BackendRegisterUserResponse, User } from '../../models';
+import { UserRegisterAdapter } from '../../adapters/user.adapter';
 
 export const Register = () => {
   const userRef = useRef<any>();
   const errRef = useRef<any>();
 
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState('xansiety');
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('test@test.com');
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  const [pwd, setPwd] = useState('');
+  const [pwd, setPwd] = useState('Abcd123!');
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState('');
+  const [matchPwd, setMatchPwd] = useState('Abcd123!');
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [userApp, setUserApp] = useState<User>({} as User);
 
   useEffect(() => {
     userRef?.current.focus();
@@ -61,7 +63,7 @@ export const Register = () => {
     }
 
     try {
-      const response = await axios.post<Promise<IRegisterResponse>>(
+      const response = await axios.post<BackendRegisterUserResponse>(
         REGISTER_URL,
         JSON.stringify({
           email: email,
@@ -75,10 +77,11 @@ export const Register = () => {
           withCredentials: true
         }
       );
-      console.log(JSON.stringify(response));
       setSuccess(true);
+      console.log(response.data);
+      setUserApp(UserRegisterAdapter(response.data));
       // clear input fields if you want to
-    } catch (err: any) { 
+    } catch (err: any) {
       if (!err?.response) {
         setErrMsg('No Server Response');
       } else if (err.response?.status === 409) {
@@ -99,6 +102,11 @@ export const Register = () => {
       {success ? (
         <section>
           <h1>Success!</h1>
+          {userApp?.name && (
+            <p>
+              Welcome <strong>{userApp?.name}</strong>!
+            </p>
+          )}
           <p>
             <a href="#">Sign In</a>
           </p>
